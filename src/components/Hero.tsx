@@ -8,6 +8,9 @@ import { plural } from '../lib/plural'
 import { arrowShift, btnBase } from '../lib/ui'
 import CarPhoto from './CarPhoto'
 
+/** Локальный баннер из public/img/hero.jpg; BASE_URL учитывает подпапку GitHub Pages (/leykacarwash/) */
+const HERO_PHOTO = `${import.meta.env.BASE_URL}img/hero.jpg`
+
 type Props = {
   /** Сколько боксов свободны прямо сейчас; null — занятость ещё грузится или студия закрыта */
   freeBoxes: number | null
@@ -23,7 +26,7 @@ export default function Hero({ freeBoxes, totalBoxes, onBook }: Props) {
   return (
     <header className="relative isolate flex h-[320px] flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-zinc-950">
       <div aria-hidden className="absolute inset-0 -z-30">
-        <CarPhoto src={business.hero.photo} alt={business.hero.photoAlt} priority />
+        <CarPhoto src={HERO_PHOTO} alt={business.hero.photoAlt} priority />
       </div>
       {/* Кино-затемнение: общий приглушающий слой, затем градиент и радиальная тень к низу */}
       <div aria-hidden className="absolute inset-0 -z-20 bg-black/30" />

@@ -7,6 +7,7 @@ import FloatingContact from '../components/FloatingContact'
 import Gallery from '../components/Gallery'
 import Hero from '../components/Hero'
 import PillNav from '../components/PillNav'
+import Preloader from '../components/Preloader'
 import ServiceTable from '../components/ServiceTable'
 import StatsRow from '../components/StatsRow'
 import business from '../business.json'
@@ -41,7 +42,7 @@ export default function ClientView() {
   const [reloadKey, setReloadKey] = useState(0)
 
   /* ---- Настройки владельца (vladislav_settings): включённые боксы и глобальная скидка ---- */
-  const { settings, reload: reloadSettings } = useShopSettings()
+  const { settings, loaded: shopLoaded, reload: reloadSettings } = useShopSettings()
   const discountPercent = activeDiscount(settings)
 
   /* ---- Настройки боксов из админки (подготовка, акция, фото) ---- */
@@ -81,6 +82,14 @@ export default function ClientView() {
     return () => window.clearInterval(timer)
   }, [reloadBusy, reloadKey])
 
+  /* ---- Прелоадер: пока не пришли настройки и занятость из Supabase (но не дольше 6 с — сеть может быть плохой) ---- */
+  const [timedOut, setTimedOut] = useState(false)
+  useEffect(() => {
+    const t = window.setTimeout(() => setTimedOut(true), 6000)
+    return () => window.clearTimeout(t)
+  }, [])
+  const appLoading = !timedOut && !(shopLoaded && settingsReady && busy !== null)
+
   /* ---- Статус боксов (логика — boxStatus в lib/availability.ts); выключенный владельцем бокс — «не принимает» ---- */
   const openNow = isOpenAt(now)
   const activeOf = (b: Box) => settings.boxActive[boxNumber(b) as 1 | 2 | 3] !== false
@@ -112,6 +121,7 @@ export default function ClientView() {
   /* ---------- Разметка ---------- */
   return (
     <div className="min-h-dvh bg-black">
+      <Preloader loading={appLoading} />
       {/*
         Bento-сетка: на десктопе 12 колонок, на телефоне одна.
         Hero и статистика — на всю ширину; ниже услуги (8) и липкий виджет записи (4).
