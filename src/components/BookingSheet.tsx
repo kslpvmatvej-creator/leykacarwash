@@ -313,11 +313,12 @@ export default function BookingSheet({
 
     // Уведомление владельцу в Telegram (с боксом — он нужен мастерам). Не ждём ответа.
     const durMin = service.durationMin[classId]
-    // На Vercel функция лежит рядом (/api/telegram). На GitHub Pages серверной части нет:
-    // задайте VITE_API_URL (адрес Vercel-проекта) или оставьте пустым — тогда уведомление пропускается.
-    const apiUrl = (import.meta.env.VITE_API_URL as string | undefined) ?? ''
-    const notifyEnabled = apiUrl !== '' || !import.meta.env.VITE_STATIC_HOST
-    if (notifyEnabled) void fetch(`${apiUrl.replace(/\/$/, '')}/api/telegram`, {
+    // Уведомление отправляет Supabase Edge Function «notify» (Telegram + VK, ключи хранятся в Supabase).
+    // VITE_NOTIFY_URL — необязательное переопределение адреса (например, '/api/telegram' для Vercel).
+    const notifyUrl =
+      (import.meta.env.VITE_NOTIFY_URL as string | undefined) ||
+      `${(import.meta.env.VITE_SUPABASE_URL as string).replace(/\/$/, '')}/functions/v1/notify`
+    void fetch(notifyUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       keepalive: true,
