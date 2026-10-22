@@ -1,0 +1,340 @@
+{
+  "businessId": "2ead704b-12f6-4857-b0ce-ba8a64433295",
+  "name": "Leyka CarWash",
+  "shortName": "LEYKA",
+  "tagline": "Премиальный детейлинг, защитные плёнки и оклейка кузова",
+  "description": "Онлайн-запись в студию премиального автодетейлинга: полировка, керамика, PPF, оклейка и химчистка салона",
+  "phone": "+7 (996) 376-09-96",
+  "address": "г. Новосибирск, ул. Жуковского, 19/1, 1 этаж",
+  "contacts": {
+    "telegram": "leykadetail",
+    "whatsapp": "79137173432"
+  },
+  "themeColor": "#3b82f6",
+  "backgroundColor": "#000000",
+  "hero": {
+    "eyebrow": "Premium Detailing & Wrapping",
+    "photo": "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=1200&q=80",
+    "photoAlt": "Тёмный силуэт спорткара"
+  },
+   "gallery": [
+    {
+      "photo": "https://ams2-cdn.2gis.com/previews/1216618492598419456/dabb2f79-9399-4448-ae57-35b90d3b8517/3/ru/352x190?api-version=2.0",
+      "caption": "Общий вид"
+    },
+    {
+      "photo": "https://cdn.phototourl.com/member/2026-10-10-7b15180f-52de-4132-a0e3-a0b3c2f823c4.jpg",
+      "caption": "Детали кузова"
+    },
+    {
+      "photo": "https://i3.photo.2gis.com/photo-gallery/0f2ac388-e89d-4a86-ae02-88b950f47d9b.jpg",
+      "caption": "Элементы салона"
+    }
+  ],
+  "workingHours": {
+    "open": "10:00",
+    "close": "23:00"
+  },
+  "closedWeekdays": [],
+  "prepTimeMinutes": 30,
+  "slotStepMinutes": 30,
+  "minLeadTimeMinutes": 120,
+  "bookingWindowDays": 21,
+  "multiDay": {
+    "dropOffFrom": "09:00",
+    "dropOffTo": "12:00",
+    "handoverTime": "18:00"
+  },
+  "vehicleClasses": [
+    {
+      "id": "sedan",
+      "label": "Седан / хэтчбек",
+      "hint": "Golf, Camry, 3 Series"
+    },
+    {
+      "id": "crossover",
+      "label": "Кроссовер / универсал",
+      "hint": "RAV4, X3, Q5"
+    },
+    {
+      "id": "suv",
+      "label": "Внедорожник / минивэн",
+      "hint": "X5, GLE, Land Cruiser"
+    }
+  ],
+  "boxes": [
+    {
+      "id": "box-1",
+      "name": "Бокс №1",
+      "specialty": "Мойка",
+      "businessId": "2ead704b-12f6-4857-b0ce-ba8a64433295",
+      "description": "Пост мойки: комплексная и детейлинг-мойка.",
+      "icon": "Sparkles",
+      "features": [
+        "Инспекционный свет",
+        "Климат +22 °C",
+        "Фильтрация воздуха"
+      ],
+      "photos": [
+        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=80",
+        "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=80",
+        "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=900&q=80",
+        "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=900&q=80"
+      ]
+    },
+    {
+      "id": "box-2",
+      "name": "Бокс №2",
+      "specialty": "Мойка",
+      "businessId": "2ead704b-12f6-4857-b0ce-ba8a64433295",
+      "description": "Второй пост мойки: работает параллельно с первым.",
+      "icon": "Layers",
+      "features": [
+        "Зона без пыли",
+        "Климат +24 °C",
+        "Подъёмник"
+      ],
+      "photos": [
+        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=900&q=80",
+        "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=900&q=80",
+        "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=900&q=80",
+        "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=900&q=80"
+      ]
+    },
+    {
+      "id": "box-3",
+      "name": "Бокс №3",
+      "specialty": "Детейлинг",
+      "businessId": "2ead704b-12f6-4857-b0ce-ba8a64433295",
+      "description": "Пост детейлинга: полировка кузова и химчистка салона.",
+      "icon": "Droplets",
+      "features": [
+        "Бесконтактная мойка",
+        "Паровая обработка",
+        "Очистка воздуха"
+      ],
+      "photos": [
+        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=80",
+        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=80",
+        "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=900&q=80",
+        "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=80"
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "complex-wash",
+      "name": "Комплексная мойка",
+      "category": "Мойка",
+      "price": 1800,
+      "durationMinutes": 80,
+      "description": "Двухфазная мойка кузова\nВлажная уборка передней панели\nУборка салона пылесосом\nЧистка стекол изнутри\nМойка ковриков",
+      "icon": "Sparkles",
+      "boxIds": [
+        "box-1",
+        "box-2"
+      ]
+    },
+    {
+      "id": "body-wash",
+      "name": "Мойка кузова",
+      "category": "Мойка",
+      "price": 1500,
+      "durationMinutes": 80,
+      "description": "Бесконтактное нанесение активной пены\nРучная мойка крупноячеистой губкой\nТщательная промывка арок\nПродувка воздухом ручек и замков\nБережная сушка микрофиброй",
+      "icon": "Droplets",
+      "boxIds": [
+        "box-1",
+        "box-2"
+      ]
+    },
+    {
+      "id": "detailing-salon",
+      "name": "Детейлинг салона",
+      "category": "Детейлинг",
+      "price": 15000,
+      "durationMinutes": 300,
+      "description": "Детальная очистка интерьера с применением спецсредств и кистей.",
+      "icon": "Armchair",
+      "boxIds": [
+        "box-3"
+      ]
+    },
+    {
+      "id": "detailing-body",
+      "name": "Детейлинг кузова",
+      "category": "Детейлинг",
+      "price": 15000,
+      "durationMinutes": 300,
+      "description": "Детальная очистка экстерьера, удаление битума, колодочной пыли и металлических вкраплений.",
+      "icon": "ShieldCheck",
+      "boxIds": [
+        "box-3"
+      ]
+    },
+    {
+      "id": "polish",
+      "name": "Полировка",
+      "category": "Полировка",
+      "price": 15000,
+      "durationMinutes": 380,
+      "description": "Восстановительная полировка кузова для удаления царапин и возвращения глубокого блеска.",
+      "icon": "Gem",
+      "boxIds": [
+        "box-3"
+      ]
+    },
+    {
+      "id": "dry-clean",
+      "name": "Химчистка",
+      "category": "Химчистка",
+      "price": 15000,
+      "durationMinutes": 180,
+      "description": "Глубокая химчистка всех элементов интерьера с разбором или деликатной обработкой кожи и текстиля.",
+      "icon": "Sparkle",
+      "boxIds": [
+        "box-3"
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "id": "extra-quartz",
+      "name": "Кварцевое покрытие",
+      "price": 800,
+      "icon": "Shield"
+    },
+    {
+      "id": "extra-wax",
+      "name": "Восковое (жидкое) покрытие",
+      "price": 300,
+      "icon": "Droplet"
+    },
+    {
+      "id": "extra-rain-front",
+      "name": "Нанесение Анти-дождь (Лобовое)",
+      "price": 1000,
+      "icon": "CloudRain"
+    },
+    {
+      "id": "extra-rain-half",
+      "name": "Нанесение Анти-дождь (полусфера)",
+      "price": 1500,
+      "icon": "CloudRain"
+    },
+    {
+      "id": "extra-rain-all",
+      "name": "Нанесение Анти-дождь (все стекла)",
+      "price": 3000,
+      "icon": "CloudRain"
+    },
+    {
+      "id": "extra-silicone",
+      "name": "Силикон резиновых уплотнений",
+      "price": 250,
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "extra-blowout",
+      "name": "Продувка (ручки/замки/зеркала)",
+      "price": 200,
+      "icon": "Wind"
+    },
+    {
+      "id": "extra-turbodry",
+      "name": "Турбосушка (бесконтактная)",
+      "price": 700,
+      "icon": "Wind"
+    },
+    {
+      "id": "extra-mats-tornado",
+      "name": "Чистка ковриков торнадором",
+      "price": 100,
+      "icon": "Sparkles"
+    },
+    {
+      "id": "extra-trunk",
+      "name": "Чистка багажного отделения",
+      "price": 300,
+      "icon": "Briefcase"
+    },
+    {
+      "id": "extra-tires",
+      "name": "Чернение шин",
+      "price": 200,
+      "icon": "CircleDot"
+    },
+    {
+      "id": "extra-wet-clean",
+      "name": "Влажная уборка салона",
+      "price": 300,
+      "icon": "Droplet"
+    },
+    {
+      "id": "extra-glass-inside",
+      "name": "Чистка стекол изнутри",
+      "price": 250,
+      "icon": "Maximize"
+    },
+    {
+      "id": "extra-tint-removal",
+      "name": "Удаление тонировки и следов клея",
+      "price": 1000,
+      "icon": "Eraser"
+    },
+    {
+      "id": "extra-vacuum",
+      "name": "Пылесос салона",
+      "price": 250,
+      "icon": "Wind"
+    },
+    {
+      "id": "extra-leather-cond",
+      "name": "Кондиционер кожи все сидения",
+      "price": 1700,
+      "icon": "Armchair"
+    },
+    {
+      "id": "extra-ozone",
+      "name": "Озонирование салона",
+      "price": 2500,
+      "icon": "Wind"
+    },
+    {
+      "id": "extra-engine",
+      "name": "Мойка ДВС с диэлектриком",
+      "price": 2500,
+      "icon": "Wrench"
+    },
+    {
+      "id": "extra-plastic-polish",
+      "name": "Полироль и консервация пластика",
+      "price": 500,
+      "icon": "Sparkle"
+    },
+    {
+      "id": "extra-pedals",
+      "name": "Чистка педального узла и места вокруг",
+      "price": 100,
+      "icon": "Target"
+    },
+    {
+      "id": "extra-steering-wheel",
+      "name": "Чистка рулевого колеса",
+      "price": 500,
+      "icon": "Circle"
+    },
+    {
+      "id": "extra-arches",
+      "name": "Усиленная мойка арок (грязь/лёд)",
+      "price": 250,
+      "icon": "Snowflake"
+    }
+  ],
+  "utcOffsetMinutes": 420,
+  "tables": {
+    "bookings": "detailing_bookings",
+    "settings": "vladislav_settings",
+    "busyRpc": "get_detailing_busy_slots"
+  }
+}
