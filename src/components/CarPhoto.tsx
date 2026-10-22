@@ -5,6 +5,8 @@ import { cn } from '../lib/cn'
 
 type Props = {
   src?: string
+  /** Подставляется один раз, если основная ссылка не загрузилась (например, стандартное фото) */
+  fallbackSrc?: string
   alt: string
   className?: string
   /** Первый экран: грузить в первую очередь */
@@ -16,7 +18,8 @@ type Props = {
  * (или фото не задано) — вместо пустоты показывает графитовую «металлическую» заглушку.
  * Ставьте key={src}, чтобы состояние сбрасывалось при смене ссылки.
  */
-export default function CarPhoto({ src, alt, className, priority = false }: Props) {
+export default function CarPhoto({ src, fallbackSrc, alt, className, priority = false }: Props) {
+  const [current, setCurrent] = useState(src)
   const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(!src)
 
@@ -43,7 +46,7 @@ export default function CarPhoto({ src, alt, className, priority = false }: Prop
             // Картинка уже в кэше браузера — показываем без анимации
             if (el && el.complete && el.naturalWidth > 0) setLoaded(true)
           }}
-          src={src}
+          src={current}
           alt={alt}
           decoding="async"
           fetchPriority={priority ? 'high' : 'auto'}
@@ -51,7 +54,10 @@ export default function CarPhoto({ src, alt, className, priority = false }: Prop
           referrerPolicy="no-referrer"
           draggable={false}
           onLoad={() => setLoaded(true)}
-          onError={() => setFailed(true)}
+          onError={() => {
+            if (fallbackSrc && current !== fallbackSrc) setCurrent(fallbackSrc)
+            else setFailed(true)
+          }}
           className={cn(
             'absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-700',
             loaded ? 'scale-100 opacity-100' : 'scale-105 opacity-0'

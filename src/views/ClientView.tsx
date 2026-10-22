@@ -16,6 +16,7 @@ import { boxStatus, isOpenAt, type BoxStatus } from '../lib/availability'
 import { fetchBusy } from '../lib/busy'
 import { loadGuestSettings, resolveGuestSettings, type GuestSettingsMap } from '../lib/guestSettings'
 import { activeDiscount, useShopSettings } from '../lib/settings'
+import { useSiteMedia } from '../lib/siteMedia'
 import type { BusyInterval, ServiceId } from '../lib/slots'
 
 type SheetState = { open: boolean; key: number; serviceId?: ServiceId }
@@ -44,6 +45,9 @@ export default function ClientView() {
   /* ---- Настройки владельца (vladislav_settings): включённые боксы и глобальная скидка ---- */
   const { settings, loaded: shopLoaded, reload: reloadSettings } = useShopSettings()
   const discountPercent = activeDiscount(settings)
+
+  /* ---- Фото сайта из админки: баннер и галерея работ ---- */
+  const { media, loaded: mediaLoaded } = useSiteMedia()
 
   /* ---- Настройки боксов из админки (подготовка, акция, фото) ---- */
   useEffect(() => {
@@ -88,7 +92,7 @@ export default function ClientView() {
     const t = window.setTimeout(() => setTimedOut(true), 6000)
     return () => window.clearTimeout(t)
   }, [])
-  const appLoading = !timedOut && !(shopLoaded && settingsReady && busy !== null)
+  const appLoading = !timedOut && !(shopLoaded && settingsReady && mediaLoaded && busy !== null)
 
   /* ---- Статус боксов (логика — boxStatus в lib/availability.ts); выключенный владельцем бокс — «не принимает» ---- */
   const openNow = isOpenAt(now)
@@ -129,7 +133,7 @@ export default function ClientView() {
       <div className="mx-auto w-full max-w-7xl px-4 pb-32 pt-4 lg:pb-10">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           <div id="home" className="lg:col-span-12">
-            <Hero freeBoxes={statusKnown ? freeCount : null} totalBoxes={totalBoxes} onBook={() => openBooking()} />
+            <Hero freeBoxes={statusKnown ? freeCount : null} totalBoxes={totalBoxes} photo={media.heroPhoto} onBook={() => openBooking()} />
           </div>
 
           <div className="lg:col-span-12">
@@ -139,7 +143,7 @@ export default function ClientView() {
           <main className="flex min-w-0 flex-col gap-8 lg:col-span-8">
             <ServiceTable discountPercent={discountPercent} services={settings.services} onBook={(serviceId) => openBooking({ serviceId })} />
 
-            <Gallery />
+            <Gallery photos={media.gallery} />
 
             <section id="boxes" className="scroll-mt-4" aria-labelledby="boxes-title">
               <div className="mb-3 flex items-baseline gap-3 px-1">

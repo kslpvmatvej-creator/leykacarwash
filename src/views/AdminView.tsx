@@ -1,21 +1,23 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { ChevronLeft, ClipboardList, Loader2, Lock, LogOut, Mail, Percent, RefreshCw, Tags, ShieldCheck, ToggleRight, TriangleAlert } from 'lucide-react'
+import { ChevronLeft, ClipboardList, ImageIcon, Loader2, Lock, LogOut, Mail, Percent, RefreshCw, Tags, ShieldCheck, ToggleRight, TriangleAlert } from 'lucide-react'
 
 import config from '../business.json'
 import { supabase } from '../supabaseClient'
 import BoxesTab from './admin/BoxesTab'
 import LeadsTab from './admin/LeadsTab'
+import MediaTab from './admin/MediaTab'
 import MarketingTab from './admin/MarketingTab'
 import PriceTab from './admin/PriceTab'
 
-type Tab = 'leads' | 'boxes' | 'prices' | 'marketing'
+type Tab = 'leads' | 'boxes' | 'prices' | 'marketing' | 'media'
 
 const TABS: { id: Tab; label: string; icon: typeof ClipboardList }[] = [
   { id: 'leads', label: 'Заявки', icon: ClipboardList },
   { id: 'boxes', label: 'Управление боксами', icon: ToggleRight },
   { id: 'prices', label: 'Услуги и цены', icon: Tags },
   { id: 'marketing', label: 'Маркетинг', icon: Percent },
+  { id: 'media', label: 'Фото сайта', icon: ImageIcon },
 ]
 
 function AdminLogin() {
@@ -141,6 +143,7 @@ function AdminPanel({ session }: { session: Session }) {
         {tab === 'boxes' && <BoxesTab key={refreshKey} />}
         {tab === 'prices' && <PriceTab key={refreshKey} />}
         {tab === 'marketing' && <MarketingTab key={refreshKey} />}
+        {tab === 'media' && <MediaTab key={refreshKey} />}
       </div>
     </div>
   )

@@ -5,28 +5,30 @@ import { BOXES } from '../lib/catalog'
 import { cn } from '../lib/cn'
 import { telHref } from '../lib/format'
 import { plural } from '../lib/plural'
+import { isValidPhotoUrl } from '../lib/guestSettings'
+import { HERO_DEFAULT_PHOTO } from '../lib/siteMedia'
 import { arrowShift, btnBase } from '../lib/ui'
 import CarPhoto from './CarPhoto'
-
-/** Локальный баннер из public/img/hero.jpg; BASE_URL учитывает подпапку GitHub Pages (/leykacarwash/) */
-const HERO_PHOTO = `${import.meta.env.BASE_URL}img/hero.jpg`
 
 type Props = {
   /** Сколько боксов свободны прямо сейчас; null — занятость ещё грузится или студия закрыта */
   freeBoxes: number | null
   /** Боксов, принимающих клиентов (выключенные владельцем не считаем) */
   totalBoxes?: number
+  /** Баннер, загруженный владельцем в админке; пусто — стандартный public/img/hero.jpg */
+  photo?: string
   onBook: () => void
 }
 
 /** Компактный кинематографичный баннер: фото, затемнение, зерно, зеркальная кнопка «Записаться ↗» */
-export default function Hero({ freeBoxes, totalBoxes, onBook }: Props) {
+export default function Hero({ freeBoxes, totalBoxes, photo, onBook }: Props) {
   const boxes = totalBoxes ?? BOXES.length
+  const src = photo && isValidPhotoUrl(photo) ? photo.trim() : HERO_DEFAULT_PHOTO
 
   return (
     <header className="relative isolate flex h-[320px] flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-zinc-950">
       <div aria-hidden className="absolute inset-0 -z-30">
-        <CarPhoto src={HERO_PHOTO} alt={business.hero.photoAlt} priority />
+        <CarPhoto key={src} src={src} fallbackSrc={HERO_DEFAULT_PHOTO} alt={business.hero.photoAlt} priority />
       </div>
       {/* Кино-затемнение: общий приглушающий слой, затем градиент и радиальная тень к низу */}
       <div aria-hidden className="absolute inset-0 -z-20 bg-black/30" />
