@@ -36,7 +36,7 @@
     "close": "23:00"
   },
   "closedWeekdays": [],
-  "prepTimeMinutes": 30,
+  "prepTimeMinutes": 15,
   "slotStepMinutes": 30,
   "minLeadTimeMinutes": 120,
   "bookingWindowDays": 21,
@@ -201,13 +201,13 @@
     {
       "id": "extra-quartz",
       "name": "Кварцевое покрытие",
-      "price": 800,
+      "price": 1000,
       "icon": "Shield"
     },
     {
       "id": "extra-wax",
       "name": "Восковое (жидкое) покрытие",
-      "price": 300,
+      "price": 400,
       "icon": "Droplet"
     },
     {
@@ -243,13 +243,13 @@
     {
       "id": "extra-turbodry",
       "name": "Турбосушка (бесконтактная)",
-      "price": 700,
+      "price": 1000,
       "icon": "Wind"
     },
     {
       "id": "extra-mats-tornado",
       "name": "Чистка ковриков торнадором",
-      "price": 100,
+      "price": 400,
       "icon": "Sparkles"
     },
     {
@@ -261,7 +261,7 @@
     {
       "id": "extra-tires",
       "name": "Чернение шин",
-      "price": 200,
+      "price": 250,
       "icon": "CircleDot"
     },
     {
@@ -291,19 +291,19 @@
     {
       "id": "extra-leather-cond",
       "name": "Кондиционер кожи все сидения",
-      "price": 1700,
+      "price": 1500,
       "icon": "Armchair"
     },
     {
       "id": "extra-ozone",
       "name": "Озонирование салона",
-      "price": 2500,
+      "price": 1000,
       "icon": "Wind"
     },
     {
       "id": "extra-engine",
       "name": "Мойка ДВС с диэлектриком",
-      "price": 2500,
+      "price": 2000,
       "icon": "Wrench"
     },
     {
@@ -315,19 +315,19 @@
     {
       "id": "extra-pedals",
       "name": "Чистка педального узла и места вокруг",
-      "price": 100,
+      "price": 150,
       "icon": "Target"
     },
     {
       "id": "extra-steering-wheel",
       "name": "Чистка рулевого колеса",
-      "price": 500,
+      "price": 800,
       "icon": "Circle"
     },
     {
       "id": "extra-arches",
       "name": "Усиленная мойка арок (грязь/лёд)",
-      "price": 250,
+      "price": 300,
       "icon": "Snowflake"
     }
   ],
