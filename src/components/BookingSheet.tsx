@@ -84,6 +84,9 @@ export default function BookingSheet({
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<BookingSummary | null>(null)
+  // Подсказка «что не заполнено»: показывается после нажатия на неактивную кнопку
+  const [showHint, setShowHint] = useState(false)
+  const [flash, setFlash] = useState<string | null>(null)
 
   const days = useMemo(() => {
     const today = bizDateKey(Date.now())
@@ -151,19 +154,28 @@ export default function BookingSheet({
   const discountSum = subtotal - total
 
   const phoneDigits = phone.replace(/\D/g, '')
-  const missing = !vehicle
-    ? 'Выберите класс автомобиля'
+  const missingKey = !vehicle
+    ? 'class'
     : car.trim().length < 2
-      ? 'Укажите марку и модель'
+      ? 'car'
       : !service
-        ? 'Выберите услугу'
+        ? 'service'
         : !slot
-          ? 'Выберите время'
+          ? 'slot'
           : name.trim().length < 2
-            ? 'Введите имя'
+            ? 'name'
             : phoneDigits.length !== 11
-              ? 'Введите телефон'
+              ? 'phone'
               : null
+  const MISSING_TEXT: Record<string, string> = {
+    class: 'Выберите класс автомобиля',
+    car: 'Укажите марку и модель',
+    service: 'Выберите услугу',
+    slot: 'Выберите время',
+    name: 'Введите имя',
+    phone: 'Введите телефон',
+  }
+  const missing = missingKey ? MISSING_TEXT[missingKey] : null
 
   /* ---- Действия ---- */
   const resetSlot = () => setSlot(null)
@@ -198,6 +210,27 @@ export default function BookingSheet({
       else delete copy[id]
       return copy
     })
+
+  // Подсветка пропадает сама через пару секунд
+  useEffect(() => {
+    if (!flash) return
+    const t = window.setTimeout(() => setFlash(null), 2200)
+    return () => window.clearTimeout(t)
+  }, [flash])
+
+  // Кнопка «Записаться» всегда нажимаема: если что-то не заполнено — прокручиваем к этому пункту и объясняем
+  const onSubmitClick = () => {
+    if (!missingKey) {
+      void submit()
+      return
+    }
+    setError(null)
+    setShowHint(true)
+    setFlash(missingKey)
+    const el = document.getElementById(`bk-${missingKey}`)
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (el instanceof HTMLInputElement) el.focus({ preventScroll: true })
+  }
 
   const submit = async () => {
     if (!serviceId || !service || !classId || !vehicle || !slot || missing) return
@@ -372,6 +405,14 @@ export default function BookingSheet({
                 <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" /> {error}
               </p>
             )}
+            {showHint && missing && (
+              <p
+                role="alert"
+                className="mb-2.5 flex items-start gap-2 rounded-2xl border border-red-900/60 bg-red-950/50 px-3 py-2 text-sm text-red-300"
+              >
+                <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" /> Не заполнено: {missing}
+              </p>
+            )}
             <div className="mb-2.5 flex items-end justify-between gap-3">
               <p className="min-w-0 text-sm text-zinc-400">
                 {slot && service ? (
@@ -379,7 +420,7 @@ export default function BookingSheet({
                     {longDate(slot.start)}, {bizTime(slot.start)}–{bizTime(slot.end)}
                   </span>
                 ) : (
-                  (missing ?? '')
+                  (showHint ? '' : (missing ?? ''))
                 )}
                 {discountSum > 0 && (
                   <span className="mt-0.5 block text-xs font-medium text-brand-fg">
@@ -396,9 +437,15 @@ export default function BookingSheet({
             </div>
             <button
               type="button"
-              onClick={submit}
-              disabled={!!missing || submitting}
-              className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-brand text-base font-semibold text-brand-contrast shadow-[inset_0_1px_0_rgb(255_255_255/0.28)] transition hover:brightness-110 active:scale-[0.98] disabled:bg-zinc-800 disabled:text-zinc-500 disabled:shadow-none disabled:hover:brightness-100"
+              onClick={onSubmitClick}
+              disabled={submitting}
+              aria-disabled={!!missing}
+              className={cn(
+                'flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-base font-semibold transition active:scale-[0.98]',
+                missing
+                  ? 'bg-zinc-800 text-zinc-500'
+                  : 'bg-brand text-brand-contrast shadow-[inset_0_1px_0_rgb(255_255_255/0.28)] hover:brightness-110'
+              )}
             >
               {submitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Записаться'}
             </button>
@@ -412,7 +459,12 @@ export default function BookingSheet({
         <>
           {/* Автомобиль: 1 колонка на телефоне, ровный ряд из 3 на ПК */}
           <Field label="Автомобиль" hint="от класса зависит цена и время">
-            <div role="radiogroup" aria-label="Класс автомобиля" className="grid grid-cols-1 gap-2 md:grid-cols-3">
+            <div
+              id="bk-class"
+              role="radiogroup"
+              aria-label="Класс автомобиля"
+              className={cn('grid grid-cols-1 gap-2 md:grid-cols-3', flash === 'class' && 'rounded-2xl ring-2 ring-red-500/70')}
+            >
               {VEHICLE_CLASSES.map((v) => {
                 const active = vehicle?.id === v.id
                 return (
@@ -442,14 +494,20 @@ export default function BookingSheet({
                 placeholder="Марка и модель, например BMW M4"
                 autoComplete="off"
                 aria-label="Марка и модель автомобиля"
-                className={cn(INPUT, 'h-12 pl-10')}
+                id="bk-car"
+                className={cn(INPUT, 'h-12 pl-10', flash === 'car' && 'border-red-500! ring-2 ring-red-500/40')}
               />
             </div>
           </Field>
 
           {/* Услуга */}
           <Field label="Услуга">
-            <div role="radiogroup" aria-label="Услуга" className="space-y-2">
+            <div
+              id="bk-service"
+              role="radiogroup"
+              aria-label="Услуга"
+              className={cn('space-y-2', flash === 'service' && 'rounded-2xl ring-2 ring-red-500/70')}
+            >
               {serviceList.map((s) => {
                 const active = serviceId === s.id
                 const off = noBoxes(s.id)
@@ -541,6 +599,7 @@ export default function BookingSheet({
 
           {/* Время */}
           <Field label="Время начала">
+            <div id="bk-slot" className={cn(flash === 'slot' && 'rounded-2xl ring-2 ring-red-500/70')}>
             {!service || !vehicle ? (
               <EmptyHint>Выберите автомобиль и услугу, и мы покажем свободное время</EmptyHint>
             ) : busyLoading ? (
@@ -581,6 +640,7 @@ export default function BookingSheet({
                 </p>
               </>
             )}
+            </div>
           </Field>
 
           {/* Допы */}
@@ -615,7 +675,8 @@ export default function BookingSheet({
                   placeholder="Имя"
                   autoComplete="name"
                   aria-label="Имя"
-                  className={cn(INPUT, 'h-12')}
+                  id="bk-name"
+                  className={cn(INPUT, 'h-12', flash === 'name' && 'border-red-500! ring-2 ring-red-500/40')}
                 />
                 <input
                   type="tel"
@@ -625,7 +686,8 @@ export default function BookingSheet({
                   placeholder="+7 (___) ___-__-__"
                   autoComplete="tel"
                   aria-label="Телефон"
-                  className={cn(INPUT, 'h-12')}
+                  id="bk-phone"
+                  className={cn(INPUT, 'h-12', flash === 'phone' && 'border-red-500! ring-2 ring-red-500/40')}
                 />
               </div>
               <textarea
